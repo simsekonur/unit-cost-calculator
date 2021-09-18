@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './App.css';
+import { Button,Input,Table } from "reactstrap";
 export default function App(){
 
   const [items, setItems] = useState([{index:0, quantity:0, price:0, total:0}])
@@ -67,7 +68,7 @@ export default function App(){
     <div  className='App'>
       <h1 style={{ color:'red'}}> Unit Cost Calculator </h1>
       <div>
-        <table >
+        <Table dark>
           <thead style={{color: 'red'}}>
             {tableHeader}
           </thead>
@@ -78,17 +79,21 @@ export default function App(){
               {index +1}
             </td>
             <td style={{paddingRight:'25px'}}>
-            <input 
+            <Input 
                 style={{display:'flex'}}
                 type='number'
+                inputMode='decimal'
+                autoComplete='one-time-code'
                 value={item.price}
                 onChange={(e) => handlePriceChange(e,index)}
               />
             </td>
           <td style={{paddingRight:'25px'}}>
-          <input 
+          <Input 
                 style={{display:'flex'}}
                 type='number'
+                inputMode='decimal'
+                autoComplete='one-time-code'
                 value={item.quantity}
                 onChange={(e) => handleQuantityChange(e,index)}
               />
@@ -97,42 +102,41 @@ export default function App(){
               {item.total}
           </td>
           <td style={{paddingRight:'35px'}}>
-            <button style={{backgroundColor:'blue', color:'white'}} onClick={handleAddRow}>
+            <Button style={{backgroundColor:'blue', color:'white'}} onClick={handleAddRow}>
               Add 
-            </button>
+            </Button>
           </td>
           </tr>
           )}
           </tbody>
-        </table>
+        </Table>
 
       </div>
-      <button style={{ marginTop: '40px', marginBottom:'10px', backgroundColor:'blue', color:'white'}} onClick={handleCalculate}>
+      <Button style={{ marginTop: '40px', marginBottom:'10px', backgroundColor:'blue', color:'white'}} onClick={handleCalculate}>
         Calculate Unit Cost
-      </button>
+      </Button>
     
       {result !== 0.0 ? <div><p style={{color:'green', marginTop:'20px'}}>Quantity: {howMany} </p>
       <p style={{color:'green', marginTop:'20px',marginBottom:'40px'}}>Unit Cost: {result}</p>
       </div>
        
       : <p style= {{color:'green', marginBottom:'40px'}}>Add some items</p>}  
-      <div> 
       <label>How many revenue do you want?</label>
-      <input
-        style={{marginLeft:'25px'}}  
+      <Input
+        style={{ marginLeft:'25px', maxWidth:'400', display:'flex' }}  
         type='number'
+        autoComplete='one-time-code'
         value={revenue}
         onChange={handleRevenueChange}
       />
-        <div>
-        <button style={{marginTop: '40px', marginBottom:'40px', backgroundColor:'blue', color:'white'}} onClick={calculateTarget}>
-          Calculate Target Price
-        </button>
-        </div>
-      {targetPrice !== 0.0 ? <p style={{color:'green', marginBottom:'40px'}}>You should sell all of them to {targetPrice} to obtain this revenue</p> 
-      : <p style= {{color:'green', marginBottom:'40px'}}>First calculate unit cost</p>}
-      </div>  
+    <div>
+    <Button style={{marginTop: '40px', marginBottom:'40px', backgroundColor:'blue', color:'white'}} onClick={calculateTarget}>
+      Calculate Target Price
+    </Button>
     </div>
+  {targetPrice !== 0.0 ? <p style={{color:'green', marginBottom:'40px'}}>You should sell all of them to {targetPrice} to obtain this revenue</p> 
+  : <p style= {{color:'green', marginBottom:'40px'}}>First calculate unit cost</p>}
+  </div>  
   );
 
 }
