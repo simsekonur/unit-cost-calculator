@@ -43,7 +43,7 @@ export default function App(){
     })
     const result = parseFloat(parseFloat(totalValue) / parseFloat(totalQuantity));
 
-    setResult(result);
+    setResult(result.toFixed(4));
     setHowMany(totalQuantity);
     
   }
@@ -52,7 +52,7 @@ export default function App(){
     let up = parseFloat(revenue);
     up /= parseFloat(howMany);
     up += result;
-    setTargetPrice(up)
+    setTargetPrice(up.toFixed(4));
   }
 
   const tableHeader = 
@@ -99,7 +99,7 @@ export default function App(){
           </td>
           <td>
             <Button style={{backgroundColor:'blue', color:'white'}} onClick={handleAddRow}>
-              Add 
+              + 
             </Button>
           </td>
           </tr>
