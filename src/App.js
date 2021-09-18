@@ -130,7 +130,7 @@ export default function App(){
       Calculate Target Price
     </Button>
     </div>
-  {targetPrice !== 0.0 ? <p style={{color:'green', marginBottom:'40px'}}>You should sell all of them to {targetPrice.toFixed(4)} to obtain this revenue</p> 
+  {targetPrice !== 0.0 ? <p style={{color:'green', marginBottom:'40px'}}>You should sell all of them to {targetPrice} to obtain this revenue</p> 
   : <p style= {{color:'green', marginBottom:'40px'}}>First calculate unit cost</p>}
   </div>  
   );
