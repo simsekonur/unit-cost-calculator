@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import './App.css';
 export default function App(){
 
   const [items, setItems] = useState([{index:0, quantity:0, price:0, total:0}])
@@ -64,10 +64,10 @@ export default function App(){
   </tr>
 
   return (
-    <div style={{ textAlign:'center'}}>
+    <div  className='App'>
       <h1 style={{ color:'red'}}> Unit Cost Calculator </h1>
-      <div >
-        <table style={{marginLeft:'auto', marginRight:'auto'}}>
+      <div>
+        <table >
           <thead style={{color: 'red'}}>
             {tableHeader}
           </thead>
@@ -79,13 +79,15 @@ export default function App(){
             </td>
             <td style={{paddingRight:'25px'}}>
             <input 
-                  type='number'
+                style={{display:'flex'}}
+                type='number'
                 value={item.price}
                 onChange={(e) => handlePriceChange(e,index)}
               />
             </td>
           <td style={{paddingRight:'25px'}}>
           <input 
+                style={{display:'flex'}}
                 type='number'
                 value={item.quantity}
                 onChange={(e) => handleQuantityChange(e,index)}
