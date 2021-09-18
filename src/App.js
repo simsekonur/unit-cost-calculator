@@ -16,13 +16,13 @@ export default function App(){
 
   const handleQuantityChange = (e, index) => {
     const quantity = e.target.value;
-    setItems(items => items.map((o,i) => i === index ? {...o, quantity, total: quantity*o.price} : o))
+    setItems(items => items.map((o,i) => i === index ? {...o, quantity, total: (quantity*o.price).toFixed(4)} : o))
 
   }  
 
   const handlePriceChange = (e, index) => {
     const price = e.target.value;
-    setItems(items => items.map((o,i) => i === index ? {...o, price, total:price*o.quantity} : o))
+    setItems(items => items.map((o,i) => i === index ? {...o, price, total: (price*o.quantity).toFixed(4)} : o))
 
   }
 
@@ -62,7 +62,7 @@ export default function App(){
     <th>Total</th>
     <th>Add</th>
   </tr>
-
+  
   return (
     <div  className='App'>
       <h1 style={{ color:'red'}}> Unit Cost Calculator </h1>
