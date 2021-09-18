@@ -57,7 +57,6 @@ export default function App(){
 
   const tableHeader = 
   <tr>
-    <th>Index</th>
     <th>Price</th>
     <th>Quantity</th>
     <th>Total</th>
@@ -75,10 +74,7 @@ export default function App(){
           <tbody>
           {items.map((item, index) => 
           <tr key= {index} >
-            <td style={{paddingRight:'25px'}}>
-              {index +1}
-            </td>
-            <td style={{paddingRight:'25px'}}>
+            <td >
             <Input 
                 style={{display:'flex'}}
                 type='number'
@@ -88,7 +84,7 @@ export default function App(){
                 onChange={(e) => handlePriceChange(e,index)}
               />
             </td>
-          <td style={{paddingRight:'25px'}}>
+          <td >
           <Input 
                 style={{display:'flex'}}
                 type='number'
@@ -98,10 +94,10 @@ export default function App(){
                 onChange={(e) => handleQuantityChange(e,index)}
               />
           </td>
-          <td style={{paddingRight:'25px'}}>
+          <td >
               {item.total}
           </td>
-          <td style={{paddingRight:'35px'}}>
+          <td>
             <Button style={{backgroundColor:'blue', color:'white'}} onClick={handleAddRow}>
               Add 
             </Button>
