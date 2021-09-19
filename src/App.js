@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './App.css';
-import { Button,Input,Table } from "reactstrap";
+import { Button,Input, Table } from "reactstrap";
 import {
   PlusOutlined, MinusOutlined
 } from '@ant-design/icons';
@@ -12,6 +12,8 @@ export default function App(){
   const [howMany, setHowMany] = useState(0);
   const [revenue, setRevenue] = useState(0);
   const [targetPrice, setTargetPrice] = useState(0);
+
+  const [visible, setVisible] = useState(false);
 
   const handleAddRow = () => {
     setItems([...items, { quantity:0, price:0, total:0}]);
@@ -46,11 +48,15 @@ export default function App(){
 
     setResult(result);
     setHowMany(totalQuantity);
+    setVisible(true);
     
   }
 
   const handleClear = () => {
     setItems([{index:0, quantity:0, price:0, total:0}]);
+    setResult(0);
+    setHowMany(0);
+    setVisible(false);
   }
 
   const handleDeleteItem = (e,index) => {
@@ -103,10 +109,10 @@ export default function App(){
               {item.total}
           </td>
           <td>
-            <Button style={{ marginRight:'5px', marginBottom:'5px'}} onClick={handleAddRow}>
+            <Button color='primary' style={{ marginRight:'5px', marginBottom:'5px'}} onClick={handleAddRow}>
               <PlusOutlined/>
             </Button>
-            <Button onClick={(e) => handleDeleteItem(e,index)}>
+            <Button color='danger' onClick={(e) => handleDeleteItem(e,index)}>
               <MinusOutlined/>
             </Button>
           </td>
@@ -117,20 +123,22 @@ export default function App(){
 
       </div>
       
-      <Button style={{ marginTop: '40px', marginBottom:'10px', backgroundColor:'blue', color:'white'}} onClick={handleCalculate}>
+      <Button color='primary' style={{ marginTop: '40px', marginBottom:'10px'}} onClick={handleCalculate}>
         Calculate Unit Cost
       </Button>
 
-      <Button style={{ marginTop: '40px', marginBottom:'10px',  marginLeft:'10px', backgroundColor:'blue', color:'white'}} onClick={handleClear}>
+      <Button color='primary' style={{ marginTop: '40px', marginBottom:'10px',  marginLeft:'10px'}} onClick={handleClear}>
         Clear
       </Button>
-      <p style={{color:'green', marginTop:'20px'}}> Take a screenshot or save the results, they won't appear after you close this window.</p>
+      <p style={{color:'red', marginTop:'20px', marginBottom:'20px'}}> Take a screenshot or save the results, they won't appear after you close this window.</p>
       {result !== 0.0 ? <div>       
-        <p style={{color:'green', marginTop:'20px'}}>Quantity: {howMany} </p>
-        <p style={{color:'green', marginTop:'20px',marginBottom:'40px'}}>Unit Cost: {result}</p>
+        <p style={{ marginTop:'20px'}}>Quantity: {howMany} </p>
+        <p style={{ marginTop:'20px',marginBottom:'40px'}}>Unit Cost: {result}</p>
       </div>
-       
-      : <p style= {{color:'green', marginTop:'20px', marginBottom:'40px'}}>Add some items</p>}  
+      : <p style= {{ marginTop:'20px', marginBottom:'40px'}}>Add some items</p>}
+      {visible && <p>You can also calculate sale price to obtain your revenue</p>}
+
+    {visible && <div>
       <label>How many revenue do you want?</label>
       <Input
         style={{ marginLeft:'25px', maxWidth:'400', display:'flex' }}  
@@ -139,13 +147,12 @@ export default function App(){
         value={revenue}
         onChange={handleRevenueChange}
       />
-    <div>
-    <Button style={{marginTop: '40px', marginBottom:'40px', backgroundColor:'blue', color:'white'}} onClick={calculateTarget}>
-      Calculate Target Price
-    </Button>
-    </div>
-  {targetPrice !== 0.0 ? <p style={{color:'green', marginBottom:'40px'}}>You should sell all of them to {targetPrice} to obtain this revenue</p> 
-  : <p style= {{color:'green', marginBottom:'40px'}}>First calculate unit cost</p>}
+      <Button color='primary' style={{marginTop: '40px', marginBottom:'40px'}} onClick={calculateTarget}>
+        Calculate Target Price
+      </Button>
+      {targetPrice !== 0.0 ? <p style={{ marginBottom:'40px'}}>You should sell all of them to {targetPrice} to obtain this revenue</p> 
+      : <p style= {{ marginBottom:'40px'}}>First calculate unit cost</p>}
+    </div>}
   </div>  
   );
 
