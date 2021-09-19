@@ -19,12 +19,12 @@ export default function App(){
 
   const handleQuantityChange = (e, index) => {
     const quantity = e.target.value;
-    setItems(items => items.map((o,i) => i === index ? {...o, quantity, total: quantity*o.price} : o))
+    setItems(items => items.map((o,i) => i === index ? {...o, quantity, total:(quantity*o.price).toFixed(4)} : o))
   }  
 
   const handlePriceChange = (e, index) => {
     const price = e.target.value;
-    setItems(items => items.map((o,i) => i === index ? {...o, price, total:price*o.quantity} : o))
+    setItems(items => items.map((o,i) => i === index ? {...o, price, total:(price*o.quantity).toFixed(4)} : o))
   }
 
   const handleRevenueChange = (e) => {
@@ -103,7 +103,7 @@ export default function App(){
               {item.total}
           </td>
           <td>
-            <Button style={{ marginRight:'5px'}} onClick={handleAddRow}>
+            <Button style={{ marginRight:'5px', marginBottom:'5px'}} onClick={handleAddRow}>
               <PlusOutlined/>
             </Button>
             <Button onClick={(e) => handleDeleteItem(e,index)}>
