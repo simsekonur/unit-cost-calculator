@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import './App.css';
 import { Button,Input,Table } from "reactstrap";
+import {
+  PlusOutlined, MinusOutlined
+} from '@ant-design/icons';
 export default function App(){
 
   const [items, setItems] = useState([{index:0, quantity:0, price:0, total:0}])
@@ -16,14 +19,12 @@ export default function App(){
 
   const handleQuantityChange = (e, index) => {
     const quantity = e.target.value;
-    setItems(items => items.map((o,i) => i === index ? {...o, quantity, total: (quantity*o.price).toFixed(4)} : o))
-
+    setItems(items => items.map((o,i) => i === index ? {...o, quantity, total: quantity*o.price} : o))
   }  
 
   const handlePriceChange = (e, index) => {
     const price = e.target.value;
-    setItems(items => items.map((o,i) => i === index ? {...o, price, total: (price*o.quantity).toFixed(4)} : o))
-
+    setItems(items => items.map((o,i) => i === index ? {...o, price, total:price*o.quantity} : o))
   }
 
   const handleRevenueChange = (e) => {
@@ -43,33 +44,37 @@ export default function App(){
     })
     const result = parseFloat(parseFloat(totalValue) / parseFloat(totalQuantity));
 
-    setResult(result.toFixed(4));
+    setResult(result);
     setHowMany(totalQuantity);
     
+  }
+
+  const handleClear = () => {
+    setItems([{index:0, quantity:0, price:0, total:0}]);
+  }
+
+  const handleDeleteItem = (e,index) => {
+    setItems(items => items.filter((o,i) => i!== index))
   }
 
   const calculateTarget = () => {
     let up = parseFloat(revenue);
     up /= parseFloat(howMany);
     up += result;
-    setTargetPrice(up);
+    setTargetPrice(up)
   }
 
-  const tableHeader = 
-  <tr>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Total</th>
-    <th>Add</th>
-  </tr>
-  
   return (
     <div  className='App'>
-      <h1 style={{ color:'red'}}> Unit Cost Calculator </h1>
+      <h1 style={{ marginBottom:'10px'}}> Unit Cost Calculator </h1>
       <div>
         <Table dark>
           <thead style={{color: 'red'}}>
-            {tableHeader}
+          <tr>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
           </thead>
           <tbody>
           {items.map((item, index) => 
@@ -78,7 +83,7 @@ export default function App(){
             <Input 
                 style={{display:'flex'}}
                 type='number'
-                inputMode='decimal'
+                inputMode='numeric'
                 autoComplete='one-time-code'
                 value={item.price}
                 onChange={(e) => handlePriceChange(e,index)}
@@ -98,8 +103,11 @@ export default function App(){
               {item.total}
           </td>
           <td>
-            <Button style={{backgroundColor:'blue', color:'white'}} onClick={handleAddRow}>
-              + 
+            <Button style={{ marginRight:'5px'}} onClick={handleAddRow}>
+              <PlusOutlined/>
+            </Button>
+            <Button onClick={(e) => handleDeleteItem(e,index)}>
+              <MinusOutlined/>
             </Button>
           </td>
           </tr>
@@ -108,15 +116,21 @@ export default function App(){
         </Table>
 
       </div>
+      
       <Button style={{ marginTop: '40px', marginBottom:'10px', backgroundColor:'blue', color:'white'}} onClick={handleCalculate}>
         Calculate Unit Cost
       </Button>
-    
-      {result !== 0.0 ? <div><p style={{color:'green', marginTop:'20px'}}>Quantity: {howMany} </p>
-      <p style={{color:'green', marginTop:'20px',marginBottom:'40px'}}>Unit Cost: {result}</p>
+
+      <Button style={{ marginTop: '40px', marginBottom:'10px',  marginLeft:'10px', backgroundColor:'blue', color:'white'}} onClick={handleClear}>
+        Clear
+      </Button>
+      <p style={{color:'green', marginTop:'20px'}}> Take a screenshot or save the results, they won't appear after you close this window.</p>
+      {result !== 0.0 ? <div>       
+        <p style={{color:'green', marginTop:'20px'}}>Quantity: {howMany} </p>
+        <p style={{color:'green', marginTop:'20px',marginBottom:'40px'}}>Unit Cost: {result}</p>
       </div>
        
-      : <p style= {{color:'green', marginBottom:'40px'}}>Add some items</p>}  
+      : <p style= {{color:'green', marginTop:'20px', marginBottom:'40px'}}>Add some items</p>}  
       <label>How many revenue do you want?</label>
       <Input
         style={{ marginLeft:'25px', maxWidth:'400', display:'flex' }}  
